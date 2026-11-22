@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Raw Data Laporan Bab 4 - Divergensi Kinerja BSI</title>
+    <style>
+        body { font-family: 'Times New Roman', Times, serif; line-height: 1.6; color: #000; max-width: 1000px; margin: 0 auto; padding: 40px; }
+        h1, h2, h3 { text-align: center; margin-bottom: 20px; }
+        h2 { margin-top: 40px; border-bottom: 1px solid #000; padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; font-size: 11pt; }
+        th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; text-align: center; }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+        @media print { .no-print { display: none !important; } }
+    </style>
+</head>
+<body>
+
+    <div class="no-print" style="position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 100;">
+        <button onclick="copyDataForAI()" style="padding: 10px 20px; cursor: pointer; font-family: sans-serif; font-weight: bold; background: #10b981; color: #fff; border: none; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Salin Data (Format AI)</button>
+        <button onclick="window.print()" style="padding: 10px 20px; cursor: pointer; font-family: sans-serif; font-weight: bold; background: #000; color: #fff; border: none; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">Cetak PDF</button>
+    </div>
+
+    <h1>DUMP DATA STATISTIK UNTUK BAB IV SKRIPSI</h1>
+    <h3>Divergensi Kinerja Pasca-Merger Bank Syariah Indonesia</h3>
+
+    <h2>1. Pemetaan Guncangan Operasional & Peristiwa Historis (Event Tracker)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Periode</th>
+                <th style="width: 25%;">Peristiwa</th>
+                <th style="width: 15%;">Polaritas</th>
+                <th style="width: 45%;">Dampak / Konteks Eksternal</th>
+            </tr>
+        </thead>
+        <tbody id="tb-events"></tbody>
+    </table>
+
+    <h2>2. Metrik Validasi Performa NLP (IndoBERT Fine-Tuned, Test-Set)</h2>
+    <table>
+        <thead>
+            <tr><th>Indikator</th><th>Nilai (%)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Akurasi (Accuracy)</td><td class="text-center" id="acc">-</td></tr>
+            <tr><td>Presisi (Precision)</td><td class="text-center" id="prec">-</td></tr>
+            <tr><td>Sensitivitas (Recall)</td><td class="text-center" id="rec">-</td></tr>
+            <tr><td>F1-Score</td><td class="text-center" id="f1">-</td></tr>
+        </tbody>
+    </table>
+
+    <h2>3. Rekapitulasi Distribusi Sentimen Publik (X/Twitter)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Periode</th>
+                <th>Total Cuitan</th>
+                <th>Positif</th>
+                <th>Netral</th>
+                <th>Negatif</th>
+            </tr>
+        </thead>
+        <tbody id="tb-sentimen"></tbody>
+    </table>
+
+    <h2>4. Ringkasan Kinerja dan Regresi Tahunan (Divergensi Makro)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Tahun</th>
+                <th>Rata-rata Skor DEA</th>
+                <th>Rata-rata NSS</th>
+                <th>Korelasi R-Squared ($R^2$)</th>
+                <th>Status Keterikatan (Interpretasi)</th>
+            </tr>
+        </thead>
+        <tbody id="tb-regresi-tahunan"></tbody>
+    </table>
+
+    <h2>5. Tabel Komparasi Utama: DEA, Sentimen, dan Divergensi</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Periode</th>
+                <th>Skor DEA (Efisiensi)</th>
+                <th>Skor Sentimen (Normalisasi)</th>
+                <th>Net Sentiment Score (NSS)</th> 
+            </tr>
+        </thead>
+        <tbody id="tb-komparasi"></tbody>
+    </table>
+
+    <script>
+        // ==========================================
+        // FUNGSI COPY TO AI (MARKDOWN FORMATTER)
+        // ==========================================
+        function copyDataForAI() {
+            let aiText = "Berikut adalah data raw statistik untuk analisis Bab IV skripsi BSI:\n\n";
+
+            function extractTableToMarkdown(title, tableIndex) {
+                let text = `### ${title}\n`;
+                const table = document.querySelectorAll("table")[tableIndex];
+                if (!table) return text + "(Data belum dimuat)\n\n";
+
+                const rows = table.querySelectorAll("tr");
+                rows.forEach((row, index) => {
+                    const cols = row.querySelectorAll("th, td");
+                    const rowData = Array.from(cols).map(c => c.innerText.trim().replace(/\n/g, " "));
+                    text += "| " + rowData.join(" | ") + " |\n";
+                    
+                    // Tambahkan garis pemisah header Markdown setelah baris pertama (thead)
+                    if (index === 0) {
+                        text += "| " + rowData.map(() => "---").join(" | ") + " |\n";
+                    }
+                });
+                return text + "\n";
+            }
+
+            aiText += extractTableToMarkdown("1. Pemetaan Guncangan Operasional & Peristiwa Historis", 0);
+            aiText += extractTableToMarkdown("2. Metrik Validasi Performa NLP", 1);
+            aiText += extractTableToMarkdown("3. Rekapitulasi Distribusi Sentimen Publik", 2);
+            aiText += extractTableToMarkdown("4. Ringkasan Kinerja dan Regresi Tahunan", 3);
+            aiText += extractTableToMarkdown("5. Tabel Komparasi Utama (Bulanan)", 4);
+
+            const ta = document.createElement("textarea");
+            ta.value = aiText;
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand("copy");
+                alert("✅ Data berhasil disalin dalam format Markdown!\n\nSilakan paste (CTRL+V) langsung ke chat AI untuk dianalisis.");
+            } catch (err) {
+                alert("❌ Gagal menyalin data.");
+            }
+            document.body.removeChild(ta);
+        }
+
+        // ==========================================
+        // FUNGSI FETCH DATA API
+        // ==========================================
+        async function fetchData() {
+            // Fetch Historical Events Definition
+            try {
+                const resEvents = await fetch('http://127.0.0.1:5000/api/events');
+                const dataEvents = await resEvents.json();
+                let htmlEvents = '';
+                
+                const sortedKeys = Object.keys(dataEvents).sort();
+                
+                sortedKeys.forEach(key => {
+                    const evt = dataEvents[key];
+                    htmlEvents += `<tr>
+                        <td class="text-center"><b>${key}</b></td>
+                        <td>${evt.title}</td>
+                        <td class="text-center">${evt.type}</td>
+                        <td>${evt.impact}</td>
+                    </tr>`;
+                });
+                document.getElementById('tb-events').innerHTML = htmlEvents;
+            } catch (e) {
+                console.error("Historical event API endpoint is unreachable.");
+            }
+
+            // Fetch NLP Stats
+            try {
+                const resStats = await fetch('http://127.0.0.1:5000/api/stats');
+                const dataStats = await resStats.json();
+                document.getElementById('acc').innerText = dataStats.accuracy;
+                document.getElementById('prec').innerText = dataStats.precision;
+                document.getElementById('rec').innerText = dataStats.recall;
+                document.getElementById('f1').innerText = dataStats.f1_score;
+            } catch (e) { console.log('NLP API belum tersedia'); }
+
+            // Fetch Sentimen Distribusi
+            try {
+                const resTweet = await fetch('http://127.0.0.1:5000/api/tweet-stats');
+                const dataTweet = await resTweet.json();
+                let htmlTweet = '';
+                dataTweet.forEach(row => {
+                    htmlTweet += `<tr>
+                        <td class="text-center">${row.bulan}</td>
+                        <td class="text-right">${row.jumlah}</td>
+                        <td class="text-right">${row.positif}</td>
+                        <td class="text-right">${row.netral}</td>
+                        <td class="text-right">${row.negatif}</td>
+                    </tr>`;
+                });
+                document.getElementById('tb-sentimen').innerHTML = htmlTweet;
+            } catch (e) { console.error("Gagal load distribusi sentimen"); }
+
+            // Fetch Komparasi DEA & Divergensi
+            try {
+                const resData = await fetch('http://127.0.0.1:5000/api/data?sort=periode_asc');
+                const dataKomparasi = await resData.json();
+                let htmlKomp = '';
+                dataKomparasi.forEach(row => {
+                    const sentimen = row.skor_sentimen !== null ? row.skor_sentimen : 0.5000;
+                    const nss = ((parseFloat(sentimen) * 2) - 1).toFixed(4);
+                    
+                    htmlKomp += `<tr>
+                        <td class="text-center">${row.periode}</td>
+                        <td class="text-right">${row.skor_dea.toFixed(4)}</td>
+                        <td class="text-right">${sentimen.toFixed(4)}</td>
+                        <td class="text-right">${nss}</td>
+                    </tr>`;
+                });
+                document.getElementById('tb-komparasi').innerHTML = htmlKomp;
+            } catch (e) { console.error("Gagal load tabel komparasi"); }
+
+            // Fetch Regression Stats
+            try {
+                const resReg = await fetch('http://127.0.0.1:5000/api/generate-analysis-charts');
+                const dataReg = await resReg.json();
+                
+                if(dataReg.stats && dataReg.stats.yearly) {
+                    let htmlReg = '';
+                    const years = Object.keys(dataReg.stats.yearly).sort();
+                    
+                    years.forEach(year => {
+                        const row = dataReg.stats.yearly[year];
+                        const status = row.r2 < 0.1 ? "Divergen Kuat (Kebal Opini)" : "Ada Indikasi Linearitas";
+                        
+                        htmlReg += `<tr>
+                            <td class="text-center"><b>${year}</b></td>
+                            <td class="text-center">${row.rata_dea.toFixed(4)}</td>
+                            <td class="text-center">${row.rata_nss.toFixed(4)}</td>
+                            <td class="text-center">${row.r2.toFixed(4)}</td>
+                            <td>${status}</td>
+                        </tr>`;
+                    });
+                    
+                    const r2_all = dataReg.stats.overall.r2;
+                    htmlReg += `<tr style="background-color: #f8f9fa;">
+                        <td class="text-center"><b>TOTAL (2021-2025)</b></td>
+                        <td colspan="2" class="text-center"><b>OVERALL R-SQUARED</b></td>
+                        <td class="text-center"><b>${r2_all.toFixed(4)}</b></td>
+                        <td><b>Divergensi Terkonfirmasi</b></td>
+                    </tr>`;
+                    
+                    document.getElementById('tb-regresi-tahunan').innerHTML = htmlReg;
+                }
+            } catch (e) { console.error("Gagal load data regresi tahunan", e); }
+        }
+
+        fetchData();
+    </script>
+</body>
+</html>

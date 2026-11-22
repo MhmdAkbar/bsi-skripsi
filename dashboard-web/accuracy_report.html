@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Evaluasi: 2025 9</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+</head>
+<body class="bg-slate-50 text-slate-800 p-4 sm:p-6 lg:p-8">
+    <div class="max-w-[1200px] mx-auto w-full flex flex-col gap-6">
+        <header class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between gap-5">
+            <div>
+                <h1 class="text-3xl font-extrabold text-slate-900">Hasil Uji: 2025 9</h1>
+                <p class="text-sm text-slate-500 mt-1">Evaluasi performa Fine-Tuned IndoBERT vs Golden Data.</p>
+            </div>
+            <div class="flex gap-3">
+                <select id="report-match-filter" class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer">
+                    <option value="all">Semua Data</option>
+                    <option value="mismatch">Hanya Yang Tidak Sesuai (Error Analysis)</option>
+                </select>
+                <button onclick="copyToAI()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-xl text-sm font-bold shadow-md transition-all">Copy to AI</button>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-slate-500">
+                <p class="text-xs font-bold text-slate-400 uppercase">Total Golden Data</p>
+                <p class="text-4xl font-black text-slate-800 mt-2">142 <span class="text-sm font-medium text-slate-500">Tweet</span></p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-emerald-400">
+                <p class="text-xs font-bold text-slate-400 uppercase">Akurasi Model BSI</p>
+                <p class="text-4xl font-black text-emerald-600 mt-2">92.96%</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="overflow-y-auto max-h-[700px]">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-50 text-slate-600 font-bold sticky top-0 shadow-sm border-b border-slate-200">
+                        <tr>
+                            <th class="py-4 px-6 text-center w-16">No</th>
+                            <th class="py-4 px-6 w-1/2">Teks Raw</th>
+                            <th class="py-4 px-6 text-center">Ground Truth</th>
+                            <th class="py-4 px-6 text-center">Prediksi Model</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+        
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">1</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">BETE BANGET AH MALES BENCI BSI 😭😭😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">2</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">YA ALLAH MAHAL BANGET BIAYA NOTIF SMS BSI 😭😭😭😭 51K... 💔💔💔💔 @bankbsi_id</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">3</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Hari ini ngeluh pln, besok ngeluh BSI 🤣</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">4</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id byond sedang ada pemeliharaan sistem? Dari sore jam 3 an gabisa sampai sekarang</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">5</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Yaampun kangen banget suara notifikasi BSI</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">6</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">guys, ada yang tau ga cara bikin 2 akun di m-banking nya bsi (byond) #tolong</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">7</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@desemberik di seberang gedung fh kah apa gmn apa yg dkt bsi</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">8</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Bahh kantor cabang bsi nya hafal semua sama ibuku😭 jadinya aku dihafal juga😭
+
+Mau bikin laporan transaksi ntar dicepuin😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">9</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">tolong dong @bankbsi_id saya pake byond bsi  mau transfer ke bank gk bisa, mau topup ewallet juga gk bisa🤦‍♂️</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">10</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">bsi gangguan kah @bankbsi_id</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">11</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">BOGOR, 29 September 2025 – PT Bank Syariah Indonesia Tbk (BSI) menegaskan komitmen penuhnya dalam mendukung program perumahan nasional dengan menyelenggarakan Akad Massal KPR Sejahtera FLPP dan Serah Terima Kunci.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">12</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Berdasarkan data terkini 2025 (Brand Finance, Global Finance, dll.):
+
+- BCA: Brand terkuat dunia (BSI 97.1/100), aset ~Rp1.400T, profitabilitas tinggi, inovasi digital unggul, kepuasan pelanggan & CSR tinggi.
+
+- Mandiri: Aset terbesar ($147B), pertumbuhan aset 14.1%, NPL 1.2%, ekosistem retail kuat.
+
+- BRI: Revenue tinggi ($17.68B), rank 14 SEA (Fortune), fokus UMKM & inklusi keuangan.
+
+Pilihan terbaik bergantung prioritasmu, misal BCA untuk inovasi.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">13</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Menurut analisis saya dari sumber beragam seperti Global Finance, Forbes, dan Brand Finance (data 2025), Bank Central Asia (BCA) sering dianggap bank umum terbaik di Indonesia.
+
+Kinerja keuangan: Aset besar, profitabilitas tinggi, peringkat terkuat dunia (BSI 97.1/100).
+
+Non-keuangan: Kepuasan pelanggan tinggi, inovasi digital kuat, marketing efektif, komitmen CSR.
+
+Bank Mandiri unggul aset ($147B) & pertumbuhan, BRI di revenue. Pilihan tergantung prioritas.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-rose-50/30 hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">14</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">rek! ayahku kena tipu, katanya dihubungin org bank bri pdhl rek ayah bsi. udah dibilangin tp masih ngeyel. minta tolong bantu tambah tag penipu gitu dong di getcontact biar ayahku percaya. 083865374907 itu nomer nya</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-rose-600 bg-rose-50 border-rose-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">15</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">minggu depan bakal super sibuk bgtt karna ak bakal ngajuin proposal program csr ke bank BSI dann itu belum tentu di acc takutnya ada revisi hiksss</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">16</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Ankho mei meri krishna bsa h honton p radhey 
+Dil mei bsi h chavvi tumahari bolu sirf radhey radhey</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">17</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">PT Merdeka Battery Materials Tbk (MBMA)
+PT Bank Syariah Indonesia Tbk (BRIS)
+PT Indofood CBP Sukses Makmur Tbk (ICBP)
+PT Darma Henwa Tbk (DEWA) 
+PT Timah Tbk (TINS) 
+PT IndoKripto Koin Semesta Tbk (COIN)</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">18</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">GJELAS BGT COO BYOND BY BSI, MAU TOP UP EWALLET GABISA, TF JUGA GABISA ANEHH. UDAH 4 JAM DITUNGGUIN TETEP AJA GABISA KOCAK</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">19</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">makasi idx makasi bsi at least beban gw tinggal mk sekarang🥹🥹</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-rose-50/30 hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">20</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@pocarisweeps @leiraechipss @tanyakanrl kalau cicilan harus lgsg ke bank kakk, kalau beli bisa di byond kalau bsi mobile aku kurang tau kakk</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-rose-600 bg-rose-50 border-rose-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">21</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@beyourlov @leiraechipss @tanyakanrl mjb kak ini bisa di bsi mobile ga ya?</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">22</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">abis antre di bsi skrg antre lagi di momoyo😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">23</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id Woi, kenapa nyicil emas di byond by Bsi tidak bisa dibuka padahal udah jam operasional</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">24</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Sorryyy but BSI pelayanannya lama bgt 😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">25</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Tbtb banget takut BI checking jelek gara2 sopi, tapi pagi ini "kan sebelum ada sopi pinjem, akun mu sudah dipake ibu minjem2 bsi " 🙂 iya juga ya</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">26</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">sch! mending bsi atau gundar?</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">27</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Ga gue doang yg senasib blu tiba2 eror udh mau bayar pake qris ke abang grab😭 mana ga bawa dompet lupa, mbanking hsbc gue ga diaktifin pula. Untung ada tabungan qurban gue di bsi, anjir pagi2 udh tutup tabungan qurban, ulang lagi ntar tabungan gue 🫠</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">28</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Kemarin pegadaian, sekarang BSI. Mereka tu riset dulu ga sih audiensnya siapa... Kan pada ga suka kredit/ngutang/nyicil.... Harusnya tawarin tabungan berencana, Reksadana, sukuk ritel</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">29</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">gais mau tanya dong, potongan bulanan bank bni, bsi dan mandiri berapa ya?</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">30</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@leiraechipss @tanyakanrl sepertinya iyaa hanya bisa nasabah bsi kakk, krna nanti tertaut di aplikasi byond 😄</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">31</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@leiraechipss @tanyakanrl aku kemarin di bsi kakk, pakai sistem cicilan emass harga cicilannya sesuai dengan akad diawal, kalau harga emas naik cicilannya ga naikk</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">32</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id byond ku kok dah seminggu gabisa dibuka?</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">33</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">ga ikhlas sumpah, uang gue nyangkut antara spay sama bsi</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">34</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">bsi pantek 😭😭😭 mau payment malah gabisa (sebenarnya dah gabisa dr seminggu yg lalu tp kirain da bisa) malu kali 😭😭😭 mana gbs cash 😭😭😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">35</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Emg tiap awal bulan tuh permata sama bsi gangguannya muncul trs ya</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">36</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Byond bsi terburuk dari yang terburuk, sering banget maintenance tapi ga ada peningkatan sama sekali fakkk</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">37</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">gw abis bikin rekening bsi</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">38</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@cacaw168 Gpp, pake app pegadaian aja kalau kenapa2 keknya ada asuransinya. So far paling meyakinkan ya PT pegadaian dan Bank Syariah Indonesia, sisanya bank2 lainnya keknya partneran ama mereka</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">39</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">ini mba mba dan satpam bsi juga bosen liat gue</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">40</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">masa ilang di bsi?</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">41</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id Dimanakah ATM BSI di area per 4 Gandul - Cinere - Kota Depok ?
+Area tersebut ramai, sy cari ATM BSI belum ketemu.
+Baiknya ada ATM BSI. Terimakasih</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">42</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Akaun di BSI dimiliki entiti dari Kepulauan Virgin Britain dikenali sebagai Aabar Investments PJS Ltd, yg menurut dokumen mahkamah AS digunakan menyedut AS$ 1.4 billion dari dua penjualan bon pada tahun 2012 termasuk tawaran yg dibincang pada makan tengah hari di restoran tsbt.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">43</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Penyiasat meneliti bagaimana AS$ 577 juta dilencongkan sehari selepas dari penjualan bon ke sebuah akaun di BSI SA di Switzerland - bank sama yang eksekutifnya berada di Taste Paradise.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">44</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">. . . sambil berbincang tawaran bon AS$ 1.75 billion kepada 6 eksekutif sebuah bank di Switzerland. Pegawai bank BSI dan pegawai pematuhan mendapati lunch itu telah menyatukan pihak-pihak berpentingan dalam penyelewengan dana 1MDB berjumlah AS$ 4.5 billion.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">45</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">halo min @BankMuamalat papa saya salah tf uang ke bank syariah indonesia. dengan nominal yang cukup lumayan, apakah ada solusinya?</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-rose-50/30 hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">46</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@cacaw168 Crypto? ETF emas? Apa emas digitalnya/cicil emasnya Pegadaian apa BSI? Kalau cicil emas App Pegadaian ato BSI dan bbrp bank swasta yg di jamin ojk aman harusnya. Kalau emas digital app yg non perbankan bole waspada</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-rose-600 bg-rose-50 border-rose-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">47</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Berdasarkan info terkini dari OJK dan media seperti CNBC Indonesia, BSI sebenarnya termasuk penerima injeksi Rp200T bersama Himbara (Mandiri, BRI, BNI, BTN). Untuk bank seperti Panin yang tidak dapat jatah, dampaknya bisa indirek: kompetisi pasar mungkin dorong penurunan suku bunga kredit secara keseluruhan, termasuk KPR, sekitar 0,25-0,5% dalam 3-6 bulan, tergantung likuiditas dan kebijakan BI. Pantau update resmi ya!</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">48</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">N2c6 BFl Ina5KS KICNM MLa8 BSi</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">49</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Hallo, apakah aplikasi byond sedang gangguan? Dari kemarin saya mau aktivasi byond kok gagal terus ya. Thanks. 🙏 @bankbsi_id</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">50</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Bangun dgn kaget apk pd keuninstall byk bgttttt, gpp lah kl qpon, Fore, tomoro, marugame, Ismaya, soco. INI BSI SAMA KITABISA KNP IKUTAN JG???????? W GA INGET ITU PASSSSSSSSSSSS 😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">51</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@pausrebahan_ bsi emang ada aja dramanya anjrit</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">52</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@dion_sauruss Bbrp bank bumn begitu sih. BSI mobile ke Byond. Seinget gw BNI, BRI dan Mandiri juga gitu. Gw lupa persisnya apa aja, yg pasti nama aplikasi barunya kayak 1 kata inggris kurang 1 huruf.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">53</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">pdhl kelar kerja goleran dikasur macam pengangguran ulung sangat lah nikmat, lantas knp oknum oknum itu memilih untuk selingkuh? energi lo pd infinity and byond bgt ya, dpt dri mna sikkkh?</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">54</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">BYOND BSI ANJING</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">55</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">min @bankbsi_id knp apk byond ngelag bgt sih, dari kmaren saya mau login byond bsi tp stuck di verifikasi muka terus gmna sih, entah gagal atau ga terdeteksi, dibenerin lah itu apk nya bapuk bgt anjir bikin kesel aja</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">56</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">gue hari ini payday hrusnya tp ktahan gegara BYOND BSI KONTOLLLLLLLL</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-rose-50/30 hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">57</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">kalo maki maki byond bsi bisa bikin gue kaya, ofc bakal gue lakuin sampai mati</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-rose-600 bg-rose-50 border-rose-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">58</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@rudysirwi @katanyaical @Heraloebss Itu yg di video adalah orang yg punya BSI 😅😅😅</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">59</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">BSI KENAWHY LU ERROR MULU DAH</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">60</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id min, saya mau aktivasi bank bsi di byond tapi harus masukin nomor kartu debit, sedangkan kartu debit saya belum diperbaruin ke bsi. Solusinya gimana ya, min?</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">61</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Hai Sobat SeaBank, MinSea mohon maaf untuk ketidaknyamanannya terkait kendala transfer kamu dari Bank Syariah Indonesia ke SeaBank yang belum diterima. MinSea informasikan SeaBank hanya sebagai pihak pasif atau penerima dana saja ya. MinSea sarankan kamu untuk mengkonfirmasi pada pihak bank pengirim dana untuk dilakukan pengecekan lebih lanjut. (1/2)</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">62</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Hallo Bank Syariah Indonesia @bankbsi_id . 
+Kenapa sampai sekarang debit visa tidak bisa digunakan untuk pembayaran online visa? 
+Kapan debit visa bisa digunakan untuk pembayaran online visa
+@KemenBUMN @bank_indonesia @ojkindonesia</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">63</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">bagusan mana yaaaa rekening bsi ama bca</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">64</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id orang abis pd gajian pada butuh mbanking buat tf kemana mana, ini malah maintenance mulu yaAllahurabbi. bener2 dah lu bsi. segala pake BYOND BYOND AH. dulu bsi mobile jarangggg banget maintenance tp lancar2 aja tuh</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">65</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">mau buka rekening baru buat di temcy ni mending bri/bca/bni ya? gw males bsi kejauhan anjir</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">66</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Appnya byon sama bca newgen masi gacoran appnya mybca bjir, byond cacat cik gabisa open app kalo pake dev mode 😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">67</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@yayaniiy @bankbsi_id @tyas_atut Aku masih diemin dulu. Sementara manual lewat ATM ;(
+Kayaknya emang harus ganti byond. Tapi belum berani install/isi data sendiri. Soalnya yang bsi mobile kemarin harus ke cs krn ada masalah nomor HP. Takutnya klo mau pindah byond harus diapain dulu bsi mobilenya</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">68</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">menangis krn setelah reset hp, ternyata bsi mobile ga bisa aktivasi lg, disuruh aktivasi di byond. NOOOOOO 😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">69</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">GUYSSS!! siapa tau ada yg mau intern di BSI asia afrika boleh bgt yaa, lg dibutuhin terutama cowoo
+
+#internship #magangbandung #bsiasiaafrika</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">70</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">ovt BSI gue takut gabisa dipake lagi 😔</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">71</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">🏦🤝Baceh,Bsi,Bri
+L transaksi
+= 0
+L,informasi
+= 0
+L,tabungan 
+= 0
+
+Saksi
+Bukti
+Penanggung jawab.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">72</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">🏦🤝 bsi,b aceh,Bri
+Cara usaha
+Ttd :
+
+Masalah
+Resiko : 
+
+Hasil
+Atas nama :</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-rose-50/30 hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">73</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">bsi &gt; gun******</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-rose-600 bg-rose-50 border-rose-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">74</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">min bsi lg error kah? dari semalem gabisa transfer dan nerima transferan @bankbsi_id</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">75</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">BSI bank sialan jndonesia btw</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">76</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@zeilazenlance @yayaniiy @bankbsi_id @tyas_atut kaa aku sm kyk kk.. tp byond juga sm begituu.. 😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">77</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Bank Himbara, Bank Mandiri, BRI, BNI, BTN dan BSI, kompak untuk menaikkan suku bunga deposito USD menjadi 4% p.a. per November.
+
+Ini disebut sebagai insentif bagi investor untuk menempatkan USD mereka di tanah air.
+
+FYI, bunga deposito USD di bank swasta sekitaran 1% - 2%</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">78</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">ngurus pajak motor - perpanjang kartu debit di BSI - ngurus wifi di grapari, padahal jaraknya deketan tapi cape juga ternyata urus beginian mana panas bgt lagi yaallah 😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">79</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id permisi akun byond saya terblokir, apakah bisa diselesaikan sekarang karena cabang BSI terdekat sudah tutup</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">80</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Sumpah demi BSI nih rekor bank paling banyak errorrrrrrrrrrr</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">81</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Abis ini gamau pake bsi mandiri lagi, bye banget😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">82</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">BSI ANJENKKKKKKKKK qr 3x gagal semua dan ga punya cash. Untung temen fastrespon jd mintol buat byrin</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">83</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">BSI TOLONG KALO ADA SOMETHING TUH KASI TAU PENGGUNA PLIS. BT BGT GAGAL QR 3X DAN GAGAL TF PUQI</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">84</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Stressss bngt lama lama pake bsi. Tiap mau transaksi appsnya eror mulu. Alhasil brp kali hrs nebeng org utk tfr</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">85</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Ngapa sih BSI suka pembayaran/topup dgn keterangan gagal tapi trs saldonya tetep kepotong 😭😭😭😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">86</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@deeyeu bank bsi dibawah livin atau bsi nama samaran😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">87</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Ternyata Bank BSI itu lintah darat melalui Hasanah Catd nya, pelanggan dikenakan biaya admin bulanan atas nama monthly fee. Jangan mau ditawari ya sobat?
+@bankbsi_id 
+Bak konven saja tdk sejahat itu.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">88</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Satt seeettt emang nih langkah @KemenkeuRI pak Purbaya
+
+Rekan bisnis gw infokan sore tadi akad kredit di BSI yg selama ini sulit pengajuannya. 1 minggu ini dikebut, dan minggu depan tancap gass mulai Produksi -- pupuk Organik
+
+Gassskeuuun Broder 🤠</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">89</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Ini BSI kenapa sih eror mulu
+Transferan gak masuk2 ke rek BSI, asik eror mulu
+Kenapa dah</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">90</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">FIA nih gacor cok, punya BSI, punya OYI, punya Kopjay anjaaayyy</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">91</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">BSI jelek bgt pelayanannya, demi allah gua tonjok kalo bentukan nya org</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">92</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">bsi lu kenapasiiiii ksl</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">93</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Eh anjir bsi ngapa sih lu. Kantorku juga knp harus pindah payroll anjir</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">94</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Anjirla BSI. tiba dipake buat bayar gabisa qris ny. Ga prnah2 ku pke qris BSI cuman td krna kepepet eh gagal mulu. Bikin malu aja jir kyak ga punya duit aj</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">95</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Dih emg problematik BSI byond ini. Gaje</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">96</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Lahh guaa baru tau kalo bank lain tuhh duitnya gak bisa dikeruk sampe 0 anjirr😭😭😭.....gua soalnya BSI sampe 0 bisa kocakk</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">97</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id byond gimana si pemeliharaan sistemnya, bukannya nambah bener malah gabisa dipake sama sekali padahal baru pemeliharaan sistem tp gabisa transaksi. tolong dong ini urgent saya butuh bgt</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">98</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">eh bsi error lagi kah ini</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-rose-50/30 hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">99</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">ketan susu mangga kejunya enak jujur, yang gaenak bsi kaya tai</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-rose-600 bg-rose-50 border-rose-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">100</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">o bai bai bai is tain ti sai bai bai bsi 💔💔💔💔💔💔💔🥀🥀🥀🥀🥀🥀🥀🥀😭😭😭😭😭😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">101</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">aplikasi mobile banking terjelek kunobatkan pada Byond by BSI karena ngapainnnnn klean butuh akses lokasi dan notifikasi untuk sekadar login doang</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">102</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id Selamat siang. Saya tidak bisa buka aplikasi byond, kenapa ya kak?</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">103</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id minn ini aplikasi BSI Mobile kok eror aneh, selalu tertulis aplikasi screnshot harus dimatikan padahal sedang tidak ada aplikasi lain²</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">104</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">gais mau nanya dong, akun mbanking bisa login 2 device ga ya? aku pakai bsi</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">105</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id min byond kenapa error lagi aku mau beli makan 😔</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">106</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">p @bankbsi_id byond gangguan kah?</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">107</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Anjay bsi byond error lagi. Padahal mau makan cuk</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">108</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">byond bsi kalo bentukannya orang udah gue tonjokin cok cok</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">109</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">KAN BNR BSI EROR</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">110</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">WOY @bankbsi_id BENERIJ BYOND NYA GOBLOKKKKKKKKKK GW PESEN MAKANAN GAK BISA QRIS GAK BISA TF GAK BISA TOP UP DI EWALLET LAIN PADAHAL MAKANANNYA UDAH JADI ANJINGGGGGGGGG MANA LAGI JAUH DARI RUMAH TOLOLLLLLLLL SELAMA INI UDAH SABAR TAPI INI UDAH MELEWATI BATAS KESABARAN GW BANGET</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">111</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Ya Allah gada duwettt, semuanya di BSI mau nangieesss😭😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-rose-50/30 hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">112</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">BYOND KALO BENTUKANNYA ORANG UDAH GW TENGGELEMIN DI PARANGTRITIS IDUP IDUPPPPPPPPP</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-rose-600 bg-rose-50 border-rose-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">113</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">kenapa lagi byond nih yaAllah</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">114</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Dari apk BSI dipaksa pindah BYOND, tapi malah sering error, hadeh</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">115</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Aposih BSI jelek niann , dk prnh dk error perasaannnnnn tpi wong bnyk yg makek .ANEH</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">116</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Berdasarkan kebijakan pemerintah menyuntik Rp200T ke Himbara dan BSI, Menteri Keuangan menyatakan suku bunga pinjaman cenderung turun karena likuiditas meningkat. Saat ini, rata-rata suku bunga pinjaman bank sekitar 9%, dengan BI Rate 4,75%. Estimasi penurunan potensial 0,5-1% (jadi ke 8-8,5%), tapi tergantung faktor seperti inflasi dan permintaan kredit. Sumber: Tempo, Reuters, BI.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">117</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Berdasarkan data September 2025, margin refinancing KPR bank syariah kompetitif:
+
+- BSI: Mulai 4.56% untuk take over (tenor 1-15 thn).
+- Maybank Syariah: Mulai 4.25% (sampai 20 thn).
+- BCA Syariah: 7.5% (sampai 20 thn).
+- BTN Syariah: Mulai 7.75% (1-20 thn).
+- Muamalat: Mulai 8.5% (sampai 7 thn).
+
+Promo bisa lebih rendah; rates berubah, cek langsung di bank. Sumber: Rumah123, situs resmi.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">118</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">gue mau transaksi tp byond error mulu anjgg</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-rose-50/30 hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">119</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@lilaccountz Indonesia bukan negara sekuler. Buktinya:
+ - UUD 1945 menyatakan bahwa Ketuhanan Yang Mahaesa itu menjadi dasar negara Indonesia (di Pembukaan dan di Pasal 29).
+- Ada Kementerian Agama, Kementerian Haji dan Umrah, Pengadilan Agama.
+- Bank Syariah Indonesia dimiliki negara.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-rose-600 bg-rose-50 border-rose-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">120</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Ampun dah, sering banget ini ya apk BYOND BSI error terus..</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">121</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Konjat kanjit rumah-dempo-BSI-rumah-RS-POLSEK-BSI</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">122</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">nutup rekening bsi tu dimana yah</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">123</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Mau jual e-mas di BSI Mobil. Eh, minimal emas ngendap di BSI 0,1 gram. Dzalim banget dah ini. 
+Mana Debit Visa ngga bisa dipakai transaksi online lagi. 
+@bankbsi_id @bank_indonesia @DPR_RI</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">124</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@theblessnetwork Indonesia adanya BSI
+Bank syariah indonesia</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">125</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Berita Emiten
+
+PT Bank Syariah Indonesia Tbk (BRIS) mencatatkan peningkatan laba bersih sebesar 10.3% menjadi IDR 3.74 triliun di semester I 2025.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">126</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">BSI GA BISA DIPAKE ANJIR?!!!</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">127</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">. . . terkandung dlm dokumen yg dikemukakan kpd mahkamah Singapura sebagai sebahagian drpd pertuduhan ketujuh trhdp bekas pegawai bank BSI, Yeo Jiawei.
+
+Pertuduhan terbaru trhdp Yeo itu adalah kerana mempermudahkan, melalui cara penipuan, pemindahan AS$11.95 juta . . . .</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">128</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Bank Tabungan Negara (BTN) Rp25 triliun; Bank Syariah Indonesia (BSI) Rp10 triliun.</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">129</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">yang dihadiri oleh Kepala Kejaksaan Negeri Batu Dr. Andy Sasongko, S.H., M.Hum., beserta para Kasi, Kasubag dan Pegawai Bidang Pembinaan Kejaksaan Negeri Batu, dengan Bank Syariah Indonesia (BSI) yang dihadiri oleh Area Manager Bank BSI Area Malang Waskito Vergino beserta Jajaran</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="positive" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">130</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Pembagiannya pun beragam. Bank besar seperti @bankmandiri, @BANKBRI_ID, dan @BNI kebagian masing-masing Rp55 T. Sedangkan @bankbtn dapat Rp25 T, dan @bankbsi_id Rp10 T. Meski bagian BSI kecil, tapi potensi dampaknya gede banget buat industri halal yang lagi hot-hotnya. 🔥</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">positive</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">131</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id min byond eror kah min 😭</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">132</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">I'm young btw bsi kalimot kw 😉😉</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">133</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">baru sadar hari ini kalo narik bank mandiri di atm bsi kena admin 7500 😭 berarti dr kemaren2 ke potong kaga sadar bodoh sekali😆🥺</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-rose-50/30 hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="positive">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">134</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">hari-hari kehilangan barang..... kemarin kartu debit muamalat aku, sekarang kartu BSI ^_^ wow.... clumsy nya sudah mendarah daging</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-rose-600 bg-rose-50 border-rose-200">positive</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-rose-50/30 hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">135</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id @pieceofbxla Ini ada plus minusnya sih .. saya keabisan kuota, lalu ada keperluan yang mendesak dan yg tersedia hanyalah wifi,  jd ga bisa ngakses bsi mobile, padahal bener2 urgent 🫠</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-rose-600 bg-rose-50 border-rose-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">136</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Booth menarik lainnya:
+- Jala Lintas Media
+- ⁠RS Harapan Bunda
+- ⁠Klinik Luxthètic
+- ⁠Bank Jakarta
+- Bank Syariah Indonesia</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">137</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">byond ni apalah eror mulu</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">138</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">@bankbsi_id min kok aplikasi BSI MOBILE saya tidak bisa dibuka ya? Tulisannya "permintaan kehabisan waktu" terus</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="negative" data-pred="negative">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">139</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">byond pagi pagi error, lagi mau beli pertamax jadi nahan lama banget</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">negative</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">negative</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">140</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">eh bsi bisa tarik tunai tanpa kartu ga? gimana caranya?</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">141</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">besok aku mau ke bsi</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                        <tr class="bg-white hover:bg-slate-50 transition-colors report-row" data-expected="neutral" data-pred="neutral">
+                            <td class="py-4 px-6 text-center text-slate-500 font-bold">142</td>
+                            <td class="py-4 px-6 text-slate-700 leading-relaxed">Gimana ya caranya hasilin 200jt dalam sebulan? Ya Allah apa gabisa langsung dikirim aja ya ke BSI ku?</td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block bg-slate-100 border border-slate-200 px-3 py-1 rounded-lg font-bold uppercase text-xs">neutral</span>
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <span class="inline-block border px-3 py-1 rounded-lg font-bold uppercase text-xs text-emerald-700 bg-emerald-50 border-emerald-200">neutral</span>
+                            </td>
+                        </tr>
+            
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        const rawData = [{"no": 1, "text": "BETE BANGET AH MALES BENCI BSI \ud83d\ude2d\ud83d\ude2d\ud83d\ude2d", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 2, "text": "YA ALLAH MAHAL BANGET BIAYA NOTIF SMS BSI \ud83d\ude2d\ud83d\ude2d\ud83d\ude2d\ud83d\ude2d 51K... \ud83d\udc94\ud83d\udc94\ud83d\udc94\ud83d\udc94 @bankbsi_id", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 3, "text": "Hari ini ngeluh pln, besok ngeluh BSI \ud83e\udd23", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 4, "text": "@bankbsi_id byond sedang ada pemeliharaan sistem? Dari sore jam 3 an gabisa sampai sekarang", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 5, "text": "Yaampun kangen banget suara notifikasi BSI", "expected": "positive", "model_pred": "positive", "is_correct": true}, {"no": 6, "text": "guys, ada yang tau ga cara bikin 2 akun di m-banking nya bsi (byond) #tolong", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 7, "text": "@desemberik di seberang gedung fh kah apa gmn apa yg dkt bsi", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 8, "text": "Bahh kantor cabang bsi nya hafal semua sama ibuku\ud83d\ude2d jadinya aku dihafal juga\ud83d\ude2d\n\nMau bikin laporan transaksi ntar dicepuin\ud83d\ude2d", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 9, "text": "tolong dong @bankbsi_id saya pake byond bsi  mau transfer ke bank gk bisa, mau topup ewallet juga gk bisa\ud83e\udd26\u200d\u2642\ufe0f", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 10, "text": "bsi gangguan kah @bankbsi_id", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 11, "text": "BOGOR, 29 September 2025 \u2013 PT Bank Syariah Indonesia Tbk (BSI) menegaskan komitmen penuhnya dalam mendukung program perumahan nasional dengan menyelenggarakan Akad Massal KPR Sejahtera FLPP dan Serah Terima Kunci.", "expected": "positive", "model_pred": "positive", "is_correct": true}, {"no": 12, "text": "Berdasarkan data terkini 2025 (Brand Finance, Global Finance, dll.):\n\n- BCA: Brand terkuat dunia (BSI 97.1/100), aset ~Rp1.400T, profitabilitas tinggi, inovasi digital unggul, kepuasan pelanggan & CSR tinggi.\n\n- Mandiri: Aset terbesar ($147B), pertumbuhan aset 14.1%, NPL 1.2%, ekosistem retail kuat.\n\n- BRI: Revenue tinggi ($17.68B), rank 14 SEA (Fortune), fokus UMKM & inklusi keuangan.\n\nPilihan terbaik bergantung prioritasmu, misal BCA untuk inovasi.", "expected": "positive", "model_pred": "positive", "is_correct": true}, {"no": 13, "text": "Menurut analisis saya dari sumber beragam seperti Global Finance, Forbes, dan Brand Finance (data 2025), Bank Central Asia (BCA) sering dianggap bank umum terbaik di Indonesia.\n\nKinerja keuangan: Aset besar, profitabilitas tinggi, peringkat terkuat dunia (BSI 97.1/100).\n\nNon-keuangan: Kepuasan pelanggan tinggi, inovasi digital kuat, marketing efektif, komitmen CSR.\n\nBank Mandiri unggul aset ($147B) & pertumbuhan, BRI di revenue. Pilihan tergantung prioritas.", "expected": "positive", "model_pred": "positive", "is_correct": true}, {"no": 14, "text": "rek! ayahku kena tipu, katanya dihubungin org bank bri pdhl rek ayah bsi. udah dibilangin tp masih ngeyel. minta tolong bantu tambah tag penipu gitu dong di getcontact biar ayahku percaya. 083865374907 itu nomer nya", "expected": "negative", "model_pred": "neutral", "is_correct": false}, {"no": 15, "text": "minggu depan bakal super sibuk bgtt karna ak bakal ngajuin proposal program csr ke bank BSI dann itu belum tentu di acc takutnya ada revisi hiksss", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 16, "text": "Ankho mei meri krishna bsa h honton p radhey \nDil mei bsi h chavvi tumahari bolu sirf radhey radhey", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 17, "text": "PT Merdeka Battery Materials Tbk (MBMA)\nPT Bank Syariah Indonesia Tbk (BRIS)\nPT Indofood CBP Sukses Makmur Tbk (ICBP)\nPT Darma Henwa Tbk (DEWA) \nPT Timah Tbk (TINS) \nPT IndoKripto Koin Semesta Tbk (COIN)", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 18, "text": "GJELAS BGT COO BYOND BY BSI, MAU TOP UP EWALLET GABISA, TF JUGA GABISA ANEHH. UDAH 4 JAM DITUNGGUIN TETEP AJA GABISA KOCAK", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 19, "text": "makasi idx makasi bsi at least beban gw tinggal mk sekarang\ud83e\udd79\ud83e\udd79", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 20, "text": "@pocarisweeps @leiraechipss @tanyakanrl kalau cicilan harus lgsg ke bank kakk, kalau beli bisa di byond kalau bsi mobile aku kurang tau kakk", "expected": "neutral", "model_pred": "negative", "is_correct": false}, {"no": 21, "text": "@beyourlov @leiraechipss @tanyakanrl mjb kak ini bisa di bsi mobile ga ya?", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 22, "text": "abis antre di bsi skrg antre lagi di momoyo\ud83d\ude2d", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 23, "text": "@bankbsi_id Woi, kenapa nyicil emas di byond by Bsi tidak bisa dibuka padahal udah jam operasional", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 24, "text": "Sorryyy but BSI pelayanannya lama bgt \ud83d\ude2d", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 25, "text": "Tbtb banget takut BI checking jelek gara2 sopi, tapi pagi ini \"kan sebelum ada sopi pinjem, akun mu sudah dipake ibu minjem2 bsi \" \ud83d\ude42 iya juga ya", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 26, "text": "sch! mending bsi atau gundar?", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 27, "text": "Ga gue doang yg senasib blu tiba2 eror udh mau bayar pake qris ke abang grab\ud83d\ude2d mana ga bawa dompet lupa, mbanking hsbc gue ga diaktifin pula. Untung ada tabungan qurban gue di bsi, anjir pagi2 udh tutup tabungan qurban, ulang lagi ntar tabungan gue \ud83e\udee0", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 28, "text": "Kemarin pegadaian, sekarang BSI. Mereka tu riset dulu ga sih audiensnya siapa... Kan pada ga suka kredit/ngutang/nyicil.... Harusnya tawarin tabungan berencana, Reksadana, sukuk ritel", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 29, "text": "gais mau tanya dong, potongan bulanan bank bni, bsi dan mandiri berapa ya?", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 30, "text": "@leiraechipss @tanyakanrl sepertinya iyaa hanya bisa nasabah bsi kakk, krna nanti tertaut di aplikasi byond \ud83d\ude04", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 31, "text": "@leiraechipss @tanyakanrl aku kemarin di bsi kakk, pakai sistem cicilan emass harga cicilannya sesuai dengan akad diawal, kalau harga emas naik cicilannya ga naikk", "expected": "positive", "model_pred": "positive", "is_correct": true}, {"no": 32, "text": "@bankbsi_id byond ku kok dah seminggu gabisa dibuka?", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 33, "text": "ga ikhlas sumpah, uang gue nyangkut antara spay sama bsi", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 34, "text": "bsi pantek \ud83d\ude2d\ud83d\ude2d\ud83d\ude2d mau payment malah gabisa (sebenarnya dah gabisa dr seminggu yg lalu tp kirain da bisa) malu kali \ud83d\ude2d\ud83d\ude2d\ud83d\ude2d mana gbs cash \ud83d\ude2d\ud83d\ude2d\ud83d\ude2d", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 35, "text": "Emg tiap awal bulan tuh permata sama bsi gangguannya muncul trs ya", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 36, "text": "Byond bsi terburuk dari yang terburuk, sering banget maintenance tapi ga ada peningkatan sama sekali fakkk", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 37, "text": "gw abis bikin rekening bsi", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 38, "text": "@cacaw168 Gpp, pake app pegadaian aja kalau kenapa2 keknya ada asuransinya. So far paling meyakinkan ya PT pegadaian dan Bank Syariah Indonesia, sisanya bank2 lainnya keknya partneran ama mereka", "expected": "positive", "model_pred": "positive", "is_correct": true}, {"no": 39, "text": "ini mba mba dan satpam bsi juga bosen liat gue", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 40, "text": "masa ilang di bsi?", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 41, "text": "@bankbsi_id Dimanakah ATM BSI di area per 4 Gandul - Cinere - Kota Depok ?\nArea tersebut ramai, sy cari ATM BSI belum ketemu.\nBaiknya ada ATM BSI. Terimakasih", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 42, "text": "Akaun di BSI dimiliki entiti dari Kepulauan Virgin Britain dikenali sebagai Aabar Investments PJS Ltd, yg menurut dokumen mahkamah AS digunakan menyedut AS$ 1.4 billion dari dua penjualan bon pada tahun 2012 termasuk tawaran yg dibincang pada makan tengah hari di restoran tsbt.", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 43, "text": "Penyiasat meneliti bagaimana AS$ 577 juta dilencongkan sehari selepas dari penjualan bon ke sebuah akaun di BSI SA di Switzerland - bank sama yang eksekutifnya berada di Taste Paradise.", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 44, "text": ". . . sambil berbincang tawaran bon AS$ 1.75 billion kepada 6 eksekutif sebuah bank di Switzerland. Pegawai bank BSI dan pegawai pematuhan mendapati lunch itu telah menyatukan pihak-pihak berpentingan dalam penyelewengan dana 1MDB berjumlah AS$ 4.5 billion.", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 45, "text": "halo min @BankMuamalat papa saya salah tf uang ke bank syariah indonesia. dengan nominal yang cukup lumayan, apakah ada solusinya?", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 46, "text": "@cacaw168 Crypto? ETF emas? Apa emas digitalnya/cicil emasnya Pegadaian apa BSI? Kalau cicil emas App Pegadaian ato BSI dan bbrp bank swasta yg di jamin ojk aman harusnya. Kalau emas digital app yg non perbankan bole waspada", "expected": "positive", "model_pred": "neutral", "is_correct": false}, {"no": 47, "text": "Berdasarkan info terkini dari OJK dan media seperti CNBC Indonesia, BSI sebenarnya termasuk penerima injeksi Rp200T bersama Himbara (Mandiri, BRI, BNI, BTN). Untuk bank seperti Panin yang tidak dapat jatah, dampaknya bisa indirek: kompetisi pasar mungkin dorong penurunan suku bunga kredit secara keseluruhan, termasuk KPR, sekitar 0,25-0,5% dalam 3-6 bulan, tergantung likuiditas dan kebijakan BI. Pantau update resmi ya!", "expected": "positive", "model_pred": "positive", "is_correct": true}, {"no": 48, "text": "N2c6 BFl Ina5KS KICNM MLa8 BSi", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 49, "text": "Hallo, apakah aplikasi byond sedang gangguan? Dari kemarin saya mau aktivasi byond kok gagal terus ya. Thanks. \ud83d\ude4f @bankbsi_id", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 50, "text": "Bangun dgn kaget apk pd keuninstall byk bgttttt, gpp lah kl qpon, Fore, tomoro, marugame, Ismaya, soco. INI BSI SAMA KITABISA KNP IKUTAN JG???????? W GA INGET ITU PASSSSSSSSSSSS \ud83d\ude2d", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 51, "text": "@pausrebahan_ bsi emang ada aja dramanya anjrit", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 52, "text": "@dion_sauruss Bbrp bank bumn begitu sih. BSI mobile ke Byond. Seinget gw BNI, BRI dan Mandiri juga gitu. Gw lupa persisnya apa aja, yg pasti nama aplikasi barunya kayak 1 kata inggris kurang 1 huruf.", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 53, "text": "pdhl kelar kerja goleran dikasur macam pengangguran ulung sangat lah nikmat, lantas knp oknum oknum itu memilih untuk selingkuh? energi lo pd infinity and byond bgt ya, dpt dri mna sikkkh?", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 54, "text": "BYOND BSI ANJING", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 55, "text": "min @bankbsi_id knp apk byond ngelag bgt sih, dari kmaren saya mau login byond bsi tp stuck di verifikasi muka terus gmna sih, entah gagal atau ga terdeteksi, dibenerin lah itu apk nya bapuk bgt anjir bikin kesel aja", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 56, "text": "gue hari ini payday hrusnya tp ktahan gegara BYOND BSI KONTOLLLLLLLL", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 57, "text": "kalo maki maki byond bsi bisa bikin gue kaya, ofc bakal gue lakuin sampai mati", "expected": "negative", "model_pred": "neutral", "is_correct": false}, {"no": 58, "text": "@rudysirwi @katanyaical @Heraloebss Itu yg di video adalah orang yg punya BSI \ud83d\ude05\ud83d\ude05\ud83d\ude05", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 59, "text": "BSI KENAWHY LU ERROR MULU DAH", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 60, "text": "@bankbsi_id min, saya mau aktivasi bank bsi di byond tapi harus masukin nomor kartu debit, sedangkan kartu debit saya belum diperbaruin ke bsi. Solusinya gimana ya, min?", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 61, "text": "Hai Sobat SeaBank, MinSea mohon maaf untuk ketidaknyamanannya terkait kendala transfer kamu dari Bank Syariah Indonesia ke SeaBank yang belum diterima. MinSea informasikan SeaBank hanya sebagai pihak pasif atau penerima dana saja ya. MinSea sarankan kamu untuk mengkonfirmasi pada pihak bank pengirim dana untuk dilakukan pengecekan lebih lanjut. (1/2)", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 62, "text": "Hallo Bank Syariah Indonesia @bankbsi_id . \nKenapa sampai sekarang debit visa tidak bisa digunakan untuk pembayaran online visa? \nKapan debit visa bisa digunakan untuk pembayaran online visa\n@KemenBUMN @bank_indonesia @ojkindonesia", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 63, "text": "bagusan mana yaaaa rekening bsi ama bca", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 64, "text": "@bankbsi_id orang abis pd gajian pada butuh mbanking buat tf kemana mana, ini malah maintenance mulu yaAllahurabbi. bener2 dah lu bsi. segala pake BYOND BYOND AH. dulu bsi mobile jarangggg banget maintenance tp lancar2 aja tuh", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 65, "text": "mau buka rekening baru buat di temcy ni mending bri/bca/bni ya? gw males bsi kejauhan anjir", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 66, "text": "Appnya byon sama bca newgen masi gacoran appnya mybca bjir, byond cacat cik gabisa open app kalo pake dev mode \ud83d\ude2d", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 67, "text": "@yayaniiy @bankbsi_id @tyas_atut Aku masih diemin dulu. Sementara manual lewat ATM ;(\nKayaknya emang harus ganti byond. Tapi belum berani install/isi data sendiri. Soalnya yang bsi mobile kemarin harus ke cs krn ada masalah nomor HP. Takutnya klo mau pindah byond harus diapain dulu bsi mobilenya", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 68, "text": "menangis krn setelah reset hp, ternyata bsi mobile ga bisa aktivasi lg, disuruh aktivasi di byond. NOOOOOO \ud83d\ude2d", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 69, "text": "GUYSSS!! siapa tau ada yg mau intern di BSI asia afrika boleh bgt yaa, lg dibutuhin terutama cowoo\n\n#internship #magangbandung #bsiasiaafrika", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 70, "text": "ovt BSI gue takut gabisa dipake lagi \ud83d\ude14", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 71, "text": "\ud83c\udfe6\ud83e\udd1dBaceh,Bsi,Bri\nL transaksi\n= 0\nL,informasi\n= 0\nL,tabungan \n= 0\n\nSaksi\nBukti\nPenanggung jawab.", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 72, "text": "\ud83c\udfe6\ud83e\udd1d bsi,b aceh,Bri\nCara usaha\nTtd :\n\nMasalah\nResiko : \n\nHasil\nAtas nama :", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 73, "text": "bsi &gt; gun******", "expected": "neutral", "model_pred": "negative", "is_correct": false}, {"no": 74, "text": "min bsi lg error kah? dari semalem gabisa transfer dan nerima transferan @bankbsi_id", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 75, "text": "BSI bank sialan jndonesia btw", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 76, "text": "@zeilazenlance @yayaniiy @bankbsi_id @tyas_atut kaa aku sm kyk kk.. tp byond juga sm begituu.. \ud83d\ude2d", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 77, "text": "Bank Himbara, Bank Mandiri, BRI, BNI, BTN dan BSI, kompak untuk menaikkan suku bunga deposito USD menjadi 4% p.a. per November.\n\nIni disebut sebagai insentif bagi investor untuk menempatkan USD mereka di tanah air.\n\nFYI, bunga deposito USD di bank swasta sekitaran 1% - 2%", "expected": "positive", "model_pred": "positive", "is_correct": true}, {"no": 78, "text": "ngurus pajak motor - perpanjang kartu debit di BSI - ngurus wifi di grapari, padahal jaraknya deketan tapi cape juga ternyata urus beginian mana panas bgt lagi yaallah \ud83d\ude2d", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 79, "text": "@bankbsi_id permisi akun byond saya terblokir, apakah bisa diselesaikan sekarang karena cabang BSI terdekat sudah tutup", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 80, "text": "Sumpah demi BSI nih rekor bank paling banyak errorrrrrrrrrrr", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 81, "text": "Abis ini gamau pake bsi mandiri lagi, bye banget\ud83d\ude2d", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 82, "text": "BSI ANJENKKKKKKKKK qr 3x gagal semua dan ga punya cash. Untung temen fastrespon jd mintol buat byrin", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 83, "text": "BSI TOLONG KALO ADA SOMETHING TUH KASI TAU PENGGUNA PLIS. BT BGT GAGAL QR 3X DAN GAGAL TF PUQI", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 84, "text": "Stressss bngt lama lama pake bsi. Tiap mau transaksi appsnya eror mulu. Alhasil brp kali hrs nebeng org utk tfr", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 85, "text": "Ngapa sih BSI suka pembayaran/topup dgn keterangan gagal tapi trs saldonya tetep kepotong \ud83d\ude2d\ud83d\ude2d\ud83d\ude2d\ud83d\ude2d", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 86, "text": "@deeyeu bank bsi dibawah livin atau bsi nama samaran\ud83d\ude2d", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 87, "text": "Ternyata Bank BSI itu lintah darat melalui Hasanah Catd nya, pelanggan dikenakan biaya admin bulanan atas nama monthly fee. Jangan mau ditawari ya sobat?\n@bankbsi_id \nBak konven saja tdk sejahat itu.", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 88, "text": "Satt seeettt emang nih langkah @KemenkeuRI pak Purbaya\n\nRekan bisnis gw infokan sore tadi akad kredit di BSI yg selama ini sulit pengajuannya. 1 minggu ini dikebut, dan minggu depan tancap gass mulai Produksi -- pupuk Organik\n\nGassskeuuun Broder \ud83e\udd20", "expected": "positive", "model_pred": "positive", "is_correct": true}, {"no": 89, "text": "Ini BSI kenapa sih eror mulu\nTransferan gak masuk2 ke rek BSI, asik eror mulu\nKenapa dah", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 90, "text": "FIA nih gacor cok, punya BSI, punya OYI, punya Kopjay anjaaayyy", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 91, "text": "BSI jelek bgt pelayanannya, demi allah gua tonjok kalo bentukan nya org", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 92, "text": "bsi lu kenapasiiiii ksl", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 93, "text": "Eh anjir bsi ngapa sih lu. Kantorku juga knp harus pindah payroll anjir", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 94, "text": "Anjirla BSI. tiba dipake buat bayar gabisa qris ny. Ga prnah2 ku pke qris BSI cuman td krna kepepet eh gagal mulu. Bikin malu aja jir kyak ga punya duit aj", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 95, "text": "Dih emg problematik BSI byond ini. Gaje", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 96, "text": "Lahh guaa baru tau kalo bank lain tuhh duitnya gak bisa dikeruk sampe 0 anjirr\ud83d\ude2d\ud83d\ude2d\ud83d\ude2d.....gua soalnya BSI sampe 0 bisa kocakk", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 97, "text": "@bankbsi_id byond gimana si pemeliharaan sistemnya, bukannya nambah bener malah gabisa dipake sama sekali padahal baru pemeliharaan sistem tp gabisa transaksi. tolong dong ini urgent saya butuh bgt", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 98, "text": "eh bsi error lagi kah ini", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 99, "text": "ketan susu mangga kejunya enak jujur, yang gaenak bsi kaya tai", "expected": "negative", "model_pred": "neutral", "is_correct": false}, {"no": 100, "text": "o bai bai bai is tain ti sai bai bai bsi \ud83d\udc94\ud83d\udc94\ud83d\udc94\ud83d\udc94\ud83d\udc94\ud83d\udc94\ud83d\udc94\ud83e\udd40\ud83e\udd40\ud83e\udd40\ud83e\udd40\ud83e\udd40\ud83e\udd40\ud83e\udd40\ud83e\udd40\ud83d\ude2d\ud83d\ude2d\ud83d\ude2d\ud83d\ude2d\ud83d\ude2d\ud83d\ude2d", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 101, "text": "aplikasi mobile banking terjelek kunobatkan pada Byond by BSI karena ngapainnnnn klean butuh akses lokasi dan notifikasi untuk sekadar login doang", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 102, "text": "@bankbsi_id Selamat siang. Saya tidak bisa buka aplikasi byond, kenapa ya kak?", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 103, "text": "@bankbsi_id minn ini aplikasi BSI Mobile kok eror aneh, selalu tertulis aplikasi screnshot harus dimatikan padahal sedang tidak ada aplikasi lain\u00b2", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 104, "text": "gais mau nanya dong, akun mbanking bisa login 2 device ga ya? aku pakai bsi", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 105, "text": "@bankbsi_id min byond kenapa error lagi aku mau beli makan \ud83d\ude14", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 106, "text": "p @bankbsi_id byond gangguan kah?", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 107, "text": "Anjay bsi byond error lagi. Padahal mau makan cuk", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 108, "text": "byond bsi kalo bentukannya orang udah gue tonjokin cok cok", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 109, "text": "KAN BNR BSI EROR", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 110, "text": "WOY @bankbsi_id BENERIJ BYOND NYA GOBLOKKKKKKKKKK GW PESEN MAKANAN GAK BISA QRIS GAK BISA TF GAK BISA TOP UP DI EWALLET LAIN PADAHAL MAKANANNYA UDAH JADI ANJINGGGGGGGGG MANA LAGI JAUH DARI RUMAH TOLOLLLLLLLL SELAMA INI UDAH SABAR TAPI INI UDAH MELEWATI BATAS KESABARAN GW BANGET", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 111, "text": "Ya Allah gada duwettt, semuanya di BSI mau nangieesss\ud83d\ude2d\ud83d\ude2d", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 112, "text": "BYOND KALO BENTUKANNYA ORANG UDAH GW TENGGELEMIN DI PARANGTRITIS IDUP IDUPPPPPPPPP", "expected": "negative", "model_pred": "neutral", "is_correct": false}, {"no": 113, "text": "kenapa lagi byond nih yaAllah", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 114, "text": "Dari apk BSI dipaksa pindah BYOND, tapi malah sering error, hadeh", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 115, "text": "Aposih BSI jelek niann , dk prnh dk error perasaannnnnn tpi wong bnyk yg makek .ANEH", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 116, "text": "Berdasarkan kebijakan pemerintah menyuntik Rp200T ke Himbara dan BSI, Menteri Keuangan menyatakan suku bunga pinjaman cenderung turun karena likuiditas meningkat. Saat ini, rata-rata suku bunga pinjaman bank sekitar 9%, dengan BI Rate 4,75%. Estimasi penurunan potensial 0,5-1% (jadi ke 8-8,5%), tapi tergantung faktor seperti inflasi dan permintaan kredit. Sumber: Tempo, Reuters, BI.", "expected": "positive", "model_pred": "positive", "is_correct": true}, {"no": 117, "text": "Berdasarkan data September 2025, margin refinancing KPR bank syariah kompetitif:\n\n- BSI: Mulai 4.56% untuk take over (tenor 1-15 thn).\n- Maybank Syariah: Mulai 4.25% (sampai 20 thn).\n- BCA Syariah: 7.5% (sampai 20 thn).\n- BTN Syariah: Mulai 7.75% (1-20 thn).\n- Muamalat: Mulai 8.5% (sampai 7 thn).\n\nPromo bisa lebih rendah; rates berubah, cek langsung di bank. Sumber: Rumah123, situs resmi.", "expected": "positive", "model_pred": "positive", "is_correct": true}, {"no": 118, "text": "gue mau transaksi tp byond error mulu anjgg", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 119, "text": "@lilaccountz Indonesia bukan negara sekuler. Buktinya:\n - UUD 1945 menyatakan bahwa Ketuhanan Yang Mahaesa itu menjadi dasar negara Indonesia (di Pembukaan dan di Pasal 29).\n- Ada Kementerian Agama, Kementerian Haji dan Umrah, Pengadilan Agama.\n- Bank Syariah Indonesia dimiliki negara.", "expected": "positive", "model_pred": "neutral", "is_correct": false}, {"no": 120, "text": "Ampun dah, sering banget ini ya apk BYOND BSI error terus..", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 121, "text": "Konjat kanjit rumah-dempo-BSI-rumah-RS-POLSEK-BSI", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 122, "text": "nutup rekening bsi tu dimana yah", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 123, "text": "Mau jual e-mas di BSI Mobil. Eh, minimal emas ngendap di BSI 0,1 gram. Dzalim banget dah ini. \nMana Debit Visa ngga bisa dipakai transaksi online lagi. \n@bankbsi_id @bank_indonesia @DPR_RI", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 124, "text": "@theblessnetwork Indonesia adanya BSI\nBank syariah indonesia", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 125, "text": "Berita Emiten\n\nPT Bank Syariah Indonesia Tbk (BRIS) mencatatkan peningkatan laba bersih sebesar 10.3% menjadi IDR 3.74 triliun di semester I 2025.", "expected": "positive", "model_pred": "positive", "is_correct": true}, {"no": 126, "text": "BSI GA BISA DIPAKE ANJIR?!!!", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 127, "text": ". . . terkandung dlm dokumen yg dikemukakan kpd mahkamah Singapura sebagai sebahagian drpd pertuduhan ketujuh trhdp bekas pegawai bank BSI, Yeo Jiawei.\n\nPertuduhan terbaru trhdp Yeo itu adalah kerana mempermudahkan, melalui cara penipuan, pemindahan AS$11.95 juta . . . .", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 128, "text": "Bank Tabungan Negara (BTN) Rp25 triliun; Bank Syariah Indonesia (BSI) Rp10 triliun.", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 129, "text": "yang dihadiri oleh Kepala Kejaksaan Negeri Batu Dr. Andy Sasongko, S.H., M.Hum., beserta para Kasi, Kasubag dan Pegawai Bidang Pembinaan Kejaksaan Negeri Batu, dengan Bank Syariah Indonesia (BSI) yang dihadiri oleh Area Manager Bank BSI Area Malang Waskito Vergino beserta Jajaran", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 130, "text": "Pembagiannya pun beragam. Bank besar seperti @bankmandiri, @BANKBRI_ID, dan @BNI kebagian masing-masing Rp55 T. Sedangkan @bankbtn dapat Rp25 T, dan @bankbsi_id Rp10 T. Meski bagian BSI kecil, tapi potensi dampaknya gede banget buat industri halal yang lagi hot-hotnya. \ud83d\udd25", "expected": "positive", "model_pred": "positive", "is_correct": true}, {"no": 131, "text": "@bankbsi_id min byond eror kah min \ud83d\ude2d", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 132, "text": "I'm young btw bsi kalimot kw \ud83d\ude09\ud83d\ude09", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 133, "text": "baru sadar hari ini kalo narik bank mandiri di atm bsi kena admin 7500 \ud83d\ude2d berarti dr kemaren2 ke potong kaga sadar bodoh sekali\ud83d\ude06\ud83e\udd7a", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 134, "text": "hari-hari kehilangan barang..... kemarin kartu debit muamalat aku, sekarang kartu BSI ^_^ wow.... clumsy nya sudah mendarah daging", "expected": "neutral", "model_pred": "positive", "is_correct": false}, {"no": 135, "text": "@bankbsi_id @pieceofbxla Ini ada plus minusnya sih .. saya keabisan kuota, lalu ada keperluan yang mendesak dan yg tersedia hanyalah wifi,  jd ga bisa ngakses bsi mobile, padahal bener2 urgent \ud83e\udee0", "expected": "neutral", "model_pred": "negative", "is_correct": false}, {"no": 136, "text": "Booth menarik lainnya:\n- Jala Lintas Media\n- \u2060RS Harapan Bunda\n- \u2060Klinik Luxth\u00e8tic\n- \u2060Bank Jakarta\n- Bank Syariah Indonesia", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 137, "text": "byond ni apalah eror mulu", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 138, "text": "@bankbsi_id min kok aplikasi BSI MOBILE saya tidak bisa dibuka ya? Tulisannya \"permintaan kehabisan waktu\" terus", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 139, "text": "byond pagi pagi error, lagi mau beli pertamax jadi nahan lama banget", "expected": "negative", "model_pred": "negative", "is_correct": true}, {"no": 140, "text": "eh bsi bisa tarik tunai tanpa kartu ga? gimana caranya?", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 141, "text": "besok aku mau ke bsi", "expected": "neutral", "model_pred": "neutral", "is_correct": true}, {"no": 142, "text": "Gimana ya caranya hasilin 200jt dalam sebulan? Ya Allah apa gabisa langsung dikirim aja ya ke BSI ku?", "expected": "neutral", "model_pred": "neutral", "is_correct": true}];
+        const filterDropdown = document.getElementById('report-match-filter');
+        
+        filterDropdown.addEventListener('change', (e) => {
+            const filter = e.target.value;
+            document.querySelectorAll('.report-row').forEach(row => {
+                const exp = row.getAttribute('data-expected');
+                const pred = row.getAttribute('data-pred');
+                row.style.display = (filter === 'mismatch' && exp === pred) ? 'none' : '';
+            });
+        });
+
+        function copyToAI() {
+            const filter = filterDropdown.value;
+            let filtered = rawData;
+            let filterLabel = "SEMUA DATA";
+
+            if (filter === 'mismatch') {
+                filtered = rawData.filter(d => !d.is_correct);
+                filterLabel = "HANYA PREDIKSI SALAH (ERROR ANALYSIS)";
+            }
+
+            let copyText = `========== LAPORAN AKURASI ==========\n`;
+            copyText += `Total Data : 142 Tweet\nAkurasi    : 92.96%\nFilter     : ${filterLabel}\n\n`;
+            
+            filtered.forEach(d => {
+                copyText += `${d.no}. "${d.text}"\n   Ground Truth: ${d.expected.toUpperCase()} | Prediksi Model: ${d.model_pred.toUpperCase()}\n\n`;
+            });
+
+            const ta = document.createElement("textarea");
+            ta.value = copyText; ta.style.position = "fixed"; document.body.appendChild(ta);
+            ta.focus(); ta.select();
+            try { document.execCommand('copy'); alert("Tersalin! Silakan Paste ke chat AI."); } 
+            catch(err) { alert("Gagal menyalin."); }
+            document.body.removeChild(ta);
+        }
+    </script>
+</body>
+</html>
+        

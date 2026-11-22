@@ -1,0 +1,57 @@
+# Python environments and caches
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local datasets and databases
+data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Large model artifacts
+*.safetensors
+*.pt
+*.pth
+*.onnx
+*.ckpt
+
+# Generated output and archives
+outputs/
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.log
+
+# Build artifacts
+dist/
+build/
+bin/
+*.exe
+
+# Editors, operating systems, and temporary files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+~$*
+*.tmp
+*.temp
