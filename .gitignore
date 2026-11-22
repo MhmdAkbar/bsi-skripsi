@@ -27,6 +27,7 @@ data/*
 
 # Large model artifacts
 *.safetensors
+!indobert_bsi_sentiment/model.safetensors
 *.pt
 *.pth
 *.onnx
