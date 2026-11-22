@@ -2,11 +2,22 @@
 
 Kode sumber pengumpulan data, analisis sentimen, dan dashboard untuk penelitian BSI.
 
-## Berkas lokal yang tidak disimpan di Git
+## Menjalankan dashboard di Windows
 
-Repository ini tidak menyimpan dataset mentah, database, virtual environment,
-bobot model, arsip, atau hasil keluaran. Berkas tersebut dikecualikan melalui
-`.gitignore` agar clone tetap kecil.
+Pasang Python 3.14 dan Git LFS. Setelah repository di-clone, jalankan dari
+PowerShell pada folder repository:
 
-Jika diperlukan di komputer lain, salin folder `data/`, bobot
-`indobert_bsi_sentiment/model.safetensors`, dan berkas lokal lain secara terpisah.
+```powershell
+git lfs install
+git lfs pull
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r dashboard-web\requirements.txt
+.\.venv\Scripts\python.exe dashboard-web\server2.py
+```
+
+Buka `http://127.0.0.1:5000` setelah model selesai dimuat.
+
+Dataset, database SQLite, dan konfigurasi model tersedia di repository. Bobot
+`model.safetensors` diunduh melalui Git LFS. Virtual environment, cache, output,
+dan credential lokal tetap tidak disimpan di Git.

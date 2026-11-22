@@ -21,8 +21,10 @@ from divergence_chart_service import generate_dual_axis_chart
 app = Flask(__name__)
 CORS(app)
 
-DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/skripsi_bsi_v2.db'))
-LOCAL_MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '../indobert_bsi_sentiment'))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.abspath(os.path.join(BASE_DIR, '../data/skripsi_bsi_v2.db'))
+LOCAL_MODEL_PATH = os.path.abspath(os.path.join(BASE_DIR, '../indobert_bsi_sentiment'))
+ACCURACY_REPORT_PATH = os.path.join(BASE_DIR, 'accuracy_report.html')
 
 # Global variables
 sentiment_model = None
@@ -369,7 +371,7 @@ def test_analyzer():
 def generate_analysis_charts():
     try:
         # Pastikan folder static tersedia
-        static_dir = os.path.join(os.path.dirname(__file__), 'static')
+        static_dir = os.path.join(BASE_DIR, 'static')
         os.makedirs(static_dir, exist_ok=True)
         
         conn = get_db_connection()
@@ -393,7 +395,7 @@ def generate_analysis_charts():
 @app.route('/api/generate-divergence-chart')
 def generate_divergence_chart():
     try:
-        static_dir = os.path.join(os.path.dirname(__file__), 'static')
+        static_dir = os.path.join(BASE_DIR, 'static')
         os.makedirs(static_dir, exist_ok=True)
 
         conn = get_db_connection()
@@ -417,7 +419,8 @@ def generate_divergence_chart():
 @app.route('/')
 def index():
     try:
-        filename = 'index2.html' if os.path.exists('index2.html') else 'index.html'
+        index2_path = os.path.join(BASE_DIR, 'index2.html')
+        filename = index2_path if os.path.exists(index2_path) else os.path.join(BASE_DIR, 'index.html')
         with open(filename, 'r', encoding='utf-8') as f:
             return render_template_string(f.read())
     except FileNotFoundError:
@@ -426,7 +429,7 @@ def index():
 @app.route('/annotator')
 def annotator_page():
     try:
-        with open('annotator.html', 'r', encoding='utf-8') as f:
+        with open(os.path.join(BASE_DIR, 'annotator.html'), 'r', encoding='utf-8') as f:
             return render_template_string(f.read())
     except FileNotFoundError:
         return "File annotator.html tidak ditemukan!", 404
@@ -438,7 +441,7 @@ def get_accuracy_progress():
 @app.route('/export-bab4')
 def export_bab4():
     try:
-        with open('laporan_bab4.html', 'r', encoding='utf-8') as f:
+        with open(os.path.join(BASE_DIR, 'laporan_bab4.html'), 'r', encoding='utf-8') as f:
             return render_template_string(f.read())
     except FileNotFoundError:
         return "File laporan_bab4.html belum dibuat!", 404
@@ -625,7 +628,7 @@ def run_accuracy():
 </html>
         """
         
-        with open('accuracy_report.html', 'w', encoding='utf-8') as f:
+        with open(ACCURACY_REPORT_PATH, 'w', encoding='utf-8') as f:
             f.write(html_content)
             
         accuracy_progress["is_running"] = False
@@ -823,7 +826,7 @@ def run_accuracy_all():
 </html>
         """
         
-        with open('accuracy_report.html', 'w', encoding='utf-8') as f:
+        with open(ACCURACY_REPORT_PATH, 'w', encoding='utf-8') as f:
             f.write(html_content)
             
         accuracy_progress["is_running"] = False
@@ -843,7 +846,7 @@ def run_accuracy_all():
 @app.route('/accuracy-report')
 def show_accuracy_report():
     try:
-        with open('accuracy_report.html', 'r', encoding='utf-8') as f:
+        with open(ACCURACY_REPORT_PATH, 'r', encoding='utf-8') as f:
             return render_template_string(f.read())
     except FileNotFoundError:
         return "File laporan belum dibuat. Jalankan 'Uji Akurasi' di Annotator terlebih dahulu.", 404
@@ -854,4 +857,4 @@ get_sentiment_model()
 print("=== MODEL READY ===")
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, port=5000)
+    app.run(host='127.0.0.1', port=5000)
