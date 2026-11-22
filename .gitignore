@@ -18,13 +18,6 @@ env/
 *.p12
 *.pfx
 
-# Local datasets and databases
-data/*
-*.db
-*.sqlite
-*.sqlite3
-!data/skripsi_bsi_v2.db
-
 # Large model artifacts
 *.safetensors
 !indobert_bsi_sentiment/model.safetensors
@@ -41,6 +34,9 @@ outputs/
 *.tar
 *.tar.gz
 *.log
+
+# Research data remains versioned, including databases and archives
+!data/**
 
 # Build artifacts
 dist/
