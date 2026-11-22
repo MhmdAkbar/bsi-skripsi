@@ -19,10 +19,11 @@ env/
 *.pfx
 
 # Local datasets and databases
-data/
+data/*
 *.db
 *.sqlite
 *.sqlite3
+!data/skripsi_bsi_v2.db
 
 # Large model artifacts
 *.safetensors
